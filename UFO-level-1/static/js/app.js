@@ -7,7 +7,7 @@ var tableData = data;
 var tbody = d3.select("tbody");
 
 // Console.log the ufodata from data.js
-console.log(data);
+console.log(tableData);
 
 // Step 1: Loop Through `data` and console.log each ufodata object
 
@@ -38,11 +38,6 @@ var form = d3.select(".form-control");
 // Create event handlers 
 button.on("click", runEnter);
 form.on("submit", runEnter);
-form.addEventListener('keyup', function(event) {
-    if (event.code === 'Enter') {
-      runEnter();
-    }
-  });
 
 function runEnter() {
 
@@ -53,21 +48,32 @@ function runEnter() {
 
   var inputValue = form.property("value");
 
-//  filter table by date
+  //  filter table by..
 
-var filteredData = tableData.filter(table => table.datetime === inputValue);
+  var filteredbydate = tableData.filter(table => table.datetime === inputValue);
+  var filteredbycity = tableData.filter(table => table.city === inputValue);
+  var filteredbystate = tableData.filter(table => table.state === inputValue);
+  var filteredbycountry = tableData.filter(table => table.country === inputValue);
+  var filteredbyshape = tableData.filter(table => table.shape === inputValue);
 
-console.log(filteredData);
+  //save inputs as array
 
-// clear original table
-tbody.html("");
+  //if value is null, don't need it, if it is, pull through and filter based on criteria 
 
-//display filtered table
+  var filters = [filteredbydate, filteredbycity, filteredbystate, filteredbycountry, filteredbyshape];
 
-filteredData.forEach(function(filter) {
-  console.log(filter);
+  // clear original table
+  tbody.html("");
 
-// Step 2:  Use d3 to append one table row `tr` for each ufodata object
+  //display filtered table
+
+  d3.select(".form-control>span").text(inputValue);
+
+//filter by date
+  filteredbydate.forEach(function(filter) {
+    console.log(filter);
+
+ // Step 2:  Use d3 to append one table row `tr` for each ufodata object
   var row = tbody.append("tr");
 // Step 3:  Use `Object.entries` to console.log each ufodata value
   Object.entries(filter).forEach(function([key, value]) {
@@ -78,24 +84,10 @@ filteredData.forEach(function(filter) {
 
 // Step 5: Use d3 to update each cell's text with ufodata values
     cell.text(value);
+
+
+    });
   });
-});
-
-
-
-
-
-  // // Select the input element and get the raw HTML node
-  // var  = d3.select("#patient-form-input");
-
-  // // Get the value property of the input element
-  // var inputValue = inputElement.property("value");
-
-  // console.log(inputValue);
-  // console.log(people); 
-
-  // var filteredData = people.filter(person => person.bloodType === inputValue);
-
-  // console.log(filteredData);
 
 };
+  
