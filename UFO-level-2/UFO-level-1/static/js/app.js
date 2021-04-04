@@ -15,7 +15,7 @@ function addTable(data){
   var row = tbody.append("tr");
   Object.entries(data).forEach(([key, value]) => {
     var cell = row.append("td");
-    cell.text(value);
+    cell.html(value);
   })
 }
 
